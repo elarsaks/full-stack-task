@@ -19,7 +19,9 @@ const router = express.Router()
     })
   })
   
-  .get('/getAllBooks', Controller.getBooks)
+  .delete('/deleteBook', Controller.deleteBook)
+  .get('/getAllBooks', Controller.getAllBooks)
   .post('/addBook', Controller.addBook)
+  .put('/updateBook', Controller.updateBook)
 
 module.exports = router;

@@ -3,9 +3,15 @@ const postgres = require('./connection')
 function addBook(book) {
 	return postgres.db
 			.one(`INSERT INTO books (id, author, title, description)
-			VALUES($<id>, $<title>, $<author>, $<description>)`,
-			{...book})
+				VALUES($<id>, $<title>, $<author>, $<description>)`,
+				{...book})
 			.catch(err => console.log(err))
+}
+
+function deleteBook(id) {
+	return postgres.db
+			.one(`DELETE FROM books WHERE id = $<id>`, { id })
+			.catch(postgres.handleEmptyError)
 }
 
 function getAllBooks() {
@@ -14,7 +20,20 @@ function getAllBooks() {
 			.catch(postgres.handleEmptyError)
 }
 
+function updateBook(book) {
+	return postgres.db
+		.one(`UPDATE books
+			SET title = $<title>,
+			author = $<author>,
+			description = $<description>
+			WHERE id = $<id>`,
+			{...book})
+		.catch(postgres.handleEmptyError)
+}
+
 module.exports = {
 	addBook,
-	getAllBooks
+	deleteBook,
+	getAllBooks,
+	updateBook
 }

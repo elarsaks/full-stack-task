@@ -17,13 +17,14 @@ const db = pgp({
     password: process.env.POSTGRES_PASSWORD || undefinedVariable('POSTGRES_PASSWORD'),
 })
 
+/* DEBUG
 console.log("DATABASE CONNECTION DETAILS: \n" +
    "HOST: " + process.env.POSTGRES_HOST + "\n",
    "PORT: " + process.env.POSTGRES_PORT + "\n",
    "URL: " +process.env.POSTGRES_URL + "\n",
    "USERNAME: " +process.env.POSTGRES_USERNAME + "\n",
    "PASSWORD: " +process.env.POSTGRES_PASSWORD + "\n"
-)
+) */
 
 // Return empty array if no data was returned
 function handleEmptyError(error) {
