@@ -10,18 +10,61 @@ const router = express.Router()
     next()
   })
 
-  .get('/', function (req, res, next) {
+  .get('/api/info', function (req, res, next) {
     res.send({
-			status: "OK!",
-			links: {
-				getAllBooks: "http://localhost:3001/getAllBooks"
-			}
+      deleteBook: {
+        url: "http://localhost:3001/api/deleteBook",
+        method: 'DELETE',
+        params: {
+          id: {
+            type: 'INTEGRER',
+            required: true
+          }
+        }
+      },
+      getAllBooks: {
+        url: "http://localhost:3001/api/getAllBooks",
+        method: 'GET',
+        params: null
+      },
+      addBook: {
+        url: "http://localhost:3001/api/addBook",
+        method: 'PUT',
+        params: {
+          id: {
+            type: 'INTEGRER',
+            required: true
+          },
+          title: {
+            type: 'STRING',
+            required: false
+          },
+          author: {
+            type: 'STRING',
+            required: false
+          },
+          description: {
+            type: 'STRING',
+            required: false
+          },
+        }
+      },
+      updateBook: {
+        url: "http://localhost:3001/api/updateBook",
+        method: 'UPDATE',
+        params: {
+          id: {
+            type: 'INTEGRER',
+            required: true
+          }
+        }
+      }
     })
   })
   
-  .delete('/deleteBook', Controller.deleteBook)
-  .get('/getAllBooks', Controller.getAllBooks)
-  .post('/addBook', Controller.addBook)
-  .put('/updateBook', Controller.updateBook)
+  .delete('/api/deleteBook', Controller.deleteBook)
+  .get('/api/getAllBooks', Controller.getAllBooks)
+  .post('/api/addBook', Controller.addBook)
+  .put('/api/updateBook', Controller.updateBook)
 
 module.exports = router;

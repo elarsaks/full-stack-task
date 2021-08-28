@@ -5,7 +5,7 @@ function addBook(book) {
 			.one(`INSERT INTO books (id, author, title, description)
 				VALUES($<id>, $<title>, $<author>, $<description>)`,
 				{...book})
-			.catch(err => console.log(err))
+				.catch(postgres.handleEmptyError)
 }
 
 function deleteBook(id) {
