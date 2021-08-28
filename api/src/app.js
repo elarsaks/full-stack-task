@@ -1,13 +1,10 @@
-const http = require('http');
+const express = require('express')
+const router = require('./router.js')
 
 const PORT = process.env.PORT || 3001
+const app = express()
+app.use(router)
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World');
-});
-
-server.listen(PORT, function () {
+app.listen(PORT, function () {
   console.log('Api listening on port:', PORT)
 })
