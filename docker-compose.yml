@@ -24,3 +24,20 @@ services:
       - './api/src/:/app/src'
       - './api/package.json:/app/package.json'
       - './api/package-lock.json:/app/package-lock.json'
+  postgres:
+    container_name: postgres
+    build:
+      context: ./data/
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_DB: bookstore
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: password
+      DATABASE_URL: postgres://postgres:password@postgres:5432/bookstore
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+volumes:
+  postgres_data:
