@@ -27,23 +27,11 @@ const Table = styled.div`
 		max-width: 150px;
 	}
 `
+interface BookListProps {
+	books: Book[]
+}
 
-export default () => {
-
-	const [books, setBooks] = useState<Array<Book>>([])
-
-	for (let i = 0; i < 50; i++) {
-		let oldBooks = books;
-		oldBooks.push(
-			{
-				author: `Author ${i}`,
-				description: `This description of ${i} book! Lorem ipsum dolor sit amet.`,
-				id: i,
-				title: `Book ${i}`,
-			}
-		)
-	}
-
+const BookList: React.FC<BookListProps> = ({ books }) => {
 	return (
 		<Table>
 			<table >
@@ -73,3 +61,6 @@ export default () => {
 		</Table>
 	)
 }
+
+
+export default BookList;

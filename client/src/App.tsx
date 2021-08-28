@@ -1,6 +1,9 @@
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components';
 import BookList from './components/BookList'
 import Form from './components/Form'
+import api from './api/api'
+
 
 const AppContainer = styled.div`
   text-align: center;
@@ -19,16 +22,22 @@ const Container = styled.div`
   overflow: hidden;
 `
 
-function App() {
+export default function App() {
+  const [books, setBooks] = useState<Array<Book>>([])
+
+  function getBooks() {
+    api.getAllBooks()
+      .then((data: Book[]) => setBooks(data))
+  }
+
+  useEffect(() => getBooks(), [])
   return (
     <AppContainer>
       <h1>Full Stack Task</h1>
       <Container>
         <Form />
-        <BookList />
+        <BookList books={books} />
       </Container>
     </AppContainer>
   );
 }
-
-export default App;
