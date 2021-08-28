@@ -1,4 +1,4 @@
-const postgres = require('./postgres')
+const postgres = require('./postgres/repository')
 
 class Controller {
     static getBooks(req, res, next) {

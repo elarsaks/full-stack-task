@@ -48,21 +48,4 @@ db.connect()
         console.log("ERROR:", error.message);
     });
 
-
-
-function getAllBooks() {
-    return db
-        .many(`SELECT * FROM books`)
-        .catch(handleEmptyError)
-}
-
-function addBook(book) {
-    console.log(book)
-    return db
-        .one(`INSERT INTO books (id, author, title, description)
-        VALUES($<id>, $<title>, $<author>, $<description>)`,
-        {...book})
-        .catch(err => console.log(err))
-}
-
-module.exports = {addBook, getAllBooks}
+module.exports = {db, handleEmptyError}

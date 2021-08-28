@@ -19,11 +19,7 @@ const router = express.Router()
     })
   })
   
-  .get('/getAllBooks', function (req, res, next) {
-    Controller.getBooks
-    res.send('..')
-	})
-	
+  .get('/getAllBooks', Controller.getBooks)
   .post('/addBook', Controller.addBook)
 
 module.exports = router;
