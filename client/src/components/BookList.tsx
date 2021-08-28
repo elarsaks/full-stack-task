@@ -1,6 +1,5 @@
 
 import styled from 'styled-components';
-import { useState } from 'react';
 
 const Table = styled.div`
 	width: 40vw;
@@ -29,9 +28,10 @@ const Table = styled.div`
 `
 interface BookListProps {
 	books: Book[]
+	selectBook: any // TODO: Add function type!
 }
 
-const BookList: React.FC<BookListProps> = ({ books }) => {
+const BookList: React.FC<BookListProps> = ({ books, selectBook }) => {
 	return (
 		<Table>
 			<table >
@@ -50,7 +50,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
 				</thead>
 				<tbody>
 					{books.map((item: Book) => (
-						<tr key={item.id}>
+						<tr key={item.id} onClick={() => selectBook(item)}>
 							<td >{item.title}</td>
 							<td >{item.author}</td>
 							<td >{item.description}</td>

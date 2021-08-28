@@ -2,8 +2,8 @@ const postgres = require('./connection')
 
 function addBook(book) {
 	return postgres.db
-			.one(`INSERT INTO books (id, author, title, description)
-				VALUES($<id>, $<title>, $<author>, $<description>)`,
+			.one(`INSERT INTO books (author, title, description)
+				VALUES( $<title>, $<author>, $<description>)`,
 				{...book})
 				.catch(postgres.handleEmptyError)
 }

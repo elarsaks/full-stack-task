@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 
-const Form = styled.form`
+const FormElement = styled.form`
 	width: 40vw;
 	display: flex;
 	flex-direction: column;
@@ -35,12 +35,17 @@ const Button = styled.button`
 	margin-right: 10px;
 `
 
-export default () => {
+
+interface FormProps {
+	selectedBook: Book
+}
+
+const Form: React.FC<FormProps> = ({ selectedBook }) => {
 
 	const [book, setBook] = useState<Book>()
 
 	return (
-		<Form >
+		<FormElement >
 			<label>
 				<h4 >Title:</h4>
 				<Input
@@ -67,6 +72,8 @@ export default () => {
 				<Button type='submit'>Save</Button>
 				<Button type='submit'>Delete</Button>
 			</div>
-		</Form>
+		</FormElement>
 	)
 }
+
+export default Form;

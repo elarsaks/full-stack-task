@@ -25,9 +25,20 @@ const Container = styled.div`
 export default function App() {
   const [books, setBooks] = useState<Array<Book>>([])
 
+  const [selectedBook, setSelectedBook] = useState<Book>({
+    id: books.length + 1,
+    title: '',
+    author: '',
+    description: ''
+  })
+
   function getBooks() {
     api.getAllBooks()
       .then((data: Book[]) => setBooks(data))
+  }
+
+  function selectBook(book: Book) {
+    console.log(book)
   }
 
   useEffect(() => getBooks(), [])
@@ -35,8 +46,8 @@ export default function App() {
     <AppContainer>
       <h1>Full Stack Task</h1>
       <Container>
-        <Form />
-        <BookList books={books} />
+        <Form selectedBook={selectedBook} />
+        <BookList books={books} selectBook={selectBook} />
       </Container>
     </AppContainer>
   );

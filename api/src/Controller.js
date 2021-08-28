@@ -4,7 +4,6 @@ class Controller {
 
     static addBook(req, res, next) {
         const book = {
-            id: req.query.id,
             title: req.query.title,
             author: req.query.author,
             description: req.query.description

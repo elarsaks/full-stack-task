@@ -31,10 +31,6 @@ const router = express.Router()
         url: "http://localhost:3001/api/addBook",
         method: 'PUT',
         params: {
-          id: {
-            type: 'INTEGRER',
-            required: true
-          },
           title: {
             type: 'STRING',
             required: false
