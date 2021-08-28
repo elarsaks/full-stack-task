@@ -16,7 +16,15 @@ services:
     build:
       context: ./api
       dockerfile: Dockerfile
-    command: 'sh -c "npm start"'
+    depends_on:
+      - postgres
+    command: 'sh -c "./wait-for postgres:5432 -- npm start"'
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_PORT: 5432
+      POSTGRES_URL: bookstore
     restart: unless-stopped
     ports:
       - 3001:3001
@@ -33,7 +41,6 @@ services:
       POSTGRES_DB: bookstore
       POSTGRES_USERNAME: postgres
       POSTGRES_PASSWORD: password
-      DATABASE_URL: postgres://postgres:password@postgres:5432/bookstore
     restart: unless-stopped
     volumes:
       - postgres_data:/var/lib/postgresql/data
