@@ -7,6 +7,7 @@ const app = express()
 app.use(router)
 
 function populateDB() {
+  console.log('Populating Database . . .')
   for (let i = 0; i < 50; i++) {
     postgres.addBook({
       author: `Author ${i}`,
@@ -14,13 +15,16 @@ function populateDB() {
       id: i,
       title: `Book ${i}`,
     })
-	}
+  }
 }
 
 app.listen(PORT, function () {
   console.log('Api listening on port:', PORT)
 
-  if (postgres.getAllBooks.length < 1) {
-    populateDB();
-  }
+  postgres.getAllBooks()
+    .then(books => {
+      if (books.length == 0) {
+        populateDB()
+      }
+    })
 })
