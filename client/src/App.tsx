@@ -4,7 +4,6 @@ import BookList from './components/BookList'
 import Form from './components/Form'
 import api from './api/api'
 
-
 const AppContainer = styled.div`
   text-align: center;
   padding: 2em;
@@ -21,34 +20,51 @@ const Container = styled.div`
   margin-top: 5vh;
   overflow: hidden;
 `
-
-export default function App() {
-  const [books, setBooks] = useState<Array<Book>>([])
-
-  const [selectedBook, setSelectedBook] = useState<Book>({
-    id: books.length + 1,
-    title: '',
-    author: '',
-    description: ''
-  })
-
-  function getBooks() {
-    api.getAllBooks()
-      .then((data: Book[]) => setBooks(data))
-  }
-
-  function selectBook(book: Book) {
-    console.log(book)
-  }
-
-  useEffect(() => getBooks(), [])
-  return (
-    <AppContainer>
-      <h1>Full Stack Task</h1>
-      <Container>
-        <Form selectedBook={selectedBook} />
-        <BookList books={books} selectBook={selectBook} />
-      </Container>
-    </AppContainer>
-  );
+interface AppState {
+  books: Book[]
+  activeBook: Book
 }
+
+interface AppProps {
+}
+
+class App extends React.Component<AppProps, AppState> {
+  constructor(props: AppProps) {
+    super(props);
+
+    this.state = {
+      books: [],
+      activeBook: {
+        id: 0, // NOTE: this is just a placeholder, real ID will come from SQL
+        title: '',
+        author: '',
+        description: ''
+      }
+    }
+  }
+
+
+  componentDidMount() {
+    api.getAllBooks()
+      .then((data: Book[]) => this.setState((state) => ({ books: data })))
+  }
+
+  render() {
+    return (
+      <AppContainer>
+        <h1>Full Stack Task</h1>
+        <Container>
+          <Form
+            selectedBook={{ id: 0, title: '', author: '', description: '' }}
+          />
+
+          <BookList
+            books={this.state.books}
+          />
+        </Container>
+      </AppContainer>
+    );
+  }
+}
+
+export default App;

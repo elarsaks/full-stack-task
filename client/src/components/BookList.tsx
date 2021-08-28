@@ -28,10 +28,9 @@ const Table = styled.div`
 `
 interface BookListProps {
 	books: Book[]
-	selectBook: any // TODO: Add function type!
 }
 
-const BookList: React.FC<BookListProps> = ({ books, selectBook }) => {
+const BookList: React.FC<BookListProps> = ({ books }) => {
 	return (
 		<Table>
 			<table >
@@ -50,7 +49,7 @@ const BookList: React.FC<BookListProps> = ({ books, selectBook }) => {
 				</thead>
 				<tbody>
 					{books.map((item: Book) => (
-						<tr key={item.id} onClick={() => selectBook(item)}>
+						<tr key={item.id} >
 							<td >{item.title}</td>
 							<td >{item.author}</td>
 							<td >{item.description}</td>

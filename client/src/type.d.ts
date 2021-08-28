@@ -5,3 +5,8 @@ type Book = {
   title: string
 }
 
+
+type KeyValuePair = {
+  key: string
+  value: string
+}

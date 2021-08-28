@@ -1,6 +1,6 @@
 
+import React from 'react';
 import styled from 'styled-components';
-import { useState } from 'react';
 
 const FormElement = styled.form`
 	width: 40vw;
@@ -35,45 +35,80 @@ const Button = styled.button`
 	margin-right: 10px;
 `
 
-
 interface FormProps {
 	selectedBook: Book
 }
 
-const Form: React.FC<FormProps> = ({ selectedBook }) => {
+class Form extends React.Component<FormProps, Book> {
 
-	const [book, setBook] = useState<Book>()
+	constructor(props: FormProps) {
+		super(props);
 
-	return (
-		<FormElement >
-			<label>
-				<h4 >Title:</h4>
-				<Input
-					name='title'
-				/>
-			</label>
+		this.state = {
+			id: 0, // NOTE: this is just a placeholder, real ID will come from SQL
+			title: '',
+			author: '',
+			description: ''
+		}
 
-			<label>
-				<h4 >Author:</h4>
-				<Input
-					name='author'
-				/>
-			</label>
+		this.onInputchange = this.onInputchange.bind(this)
+	}
 
-			<label>
-				<h4 >Description</h4>
-				<TextArea
-					name='description'
-				/>
-			</label>
+	onInputchange = (event: any) => {
+		switch (event.target.name) {
+			case 'title':
+				this.setState((state) => ({ title: event.target.value }))
+				break;
+			case 'author':
+				this.setState((state) => ({ author: event.target.value }))
+				break;
+			case 'description':
+				this.setState((state) => ({ description: event.target.value }))
+				break;
+			default:
+		}
+		// TODO: Why it cannot be done like this?
+		//this.setState(state => ({ [event.target.name]: event.target.value }))
+	}
 
-			<div>
-				<Button type='submit'>Save New</Button>
-				<Button type='submit'>Save</Button>
-				<Button type='submit'>Delete</Button>
-			</div>
-		</FormElement>
-	)
-}
+
+	render() {
+		return (
+			<FormElement >
+				<label>
+					<h4 >Title:</h4>
+					<Input
+						name='title'
+						value={this.state.title}
+						onChange={this.onInputchange}
+					/>
+				</label>
+
+				<label>
+					<h4 >Author:</h4>
+					<Input
+						name='author'
+						value={this.state.author}
+						onChange={this.onInputchange}
+					/>
+				</label>
+
+				<label>
+					<h4 >Description</h4>
+					<TextArea
+						name='description'
+						onChange={this.onInputchange}
+					/>
+				</label>
+
+				<div>
+					<Button >Save New</Button>
+					<Button >Save</Button>
+					<Button >Delete</Button>
+				</div>
+			</FormElement >
+		)
+	}
+};
 
 export default Form;
