@@ -1,39 +1,46 @@
 
+import styled from 'styled-components';
 import { useState } from 'react';
 
-const style = {
-	tableWrapper: {
-		width: '40vw',
-		border: '1px solid',
-		padding: '10px'
-	},
-	table: {
-		width: '100%',
-		textAlign: 'left' as const, // Needs "const assertion" because of TypeScript
-	},
-	tr: {
-		border: '1px solid',
-	},
-}
+const Table = styled.div`
+	width: 40vw;
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+	
+
+	table {
+		text-align: left;
+		border-collapse: collapse;
+	}
+
+	tbody tr {
+		&:hover {
+			background-color: #50C878;
+			cursor: pointer;
+		}
+	}
+`
 
 export default () => {
 
-	const [books, setBooks] = useState<Array<Book>>([{
-		author: 'Author 1',
-		description: 'This is a first Book!',
-		id: 1,
-		title: 'Book 1',
-	},
-	{
-		author: 'Author 2',
-		description: 'This is a second Book!',
-		id: 2,
-		title: 'Book 2',
-	}])
+	const [books, setBooks] = useState<Array<Book>>([])
+
+	for (let i = 0; i < 25; i++) {
+		let oldBooks = books;
+		oldBooks.push(
+			{
+				author: `Author ${i}`,
+				description: `This description of ${i} book!`,
+				id: i,
+				title: `Book ${i}`,
+			}
+		)
+	}
 
 	return (
-		<div style={style.tableWrapper}>
-			<table style={style.table} >
+		<Table>
+			<table >
 				<thead>
 					<tr>
 						<th>
@@ -49,9 +56,7 @@ export default () => {
 				</thead>
 				<tbody>
 					{books.map((item: Book) => (
-						<tr key={item.id}
-							style={style.tr}
-						>
+						<tr key={item.id}>
 							<td >{item.title}</td>
 							<td >{item.author}</td>
 							<td >{item.description}</td>
@@ -59,7 +64,6 @@ export default () => {
 					))}
 				</tbody>
 			</table>
-		</div>
-
+		</Table>
 	)
 }

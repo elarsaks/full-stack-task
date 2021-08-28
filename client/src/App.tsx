@@ -1,29 +1,29 @@
+import styled from 'styled-components';
 import BookList from './components/BookList'
 import Form from './components/Form'
 
-const style = {
-  app: {
+const AppContainer = styled.div`
 
-  },
+`
 
-  contentContainer: {
-    width: '80vw',
-    border: 'solid 1px blue',
-    display: 'flex',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginTop: '10vh',
-  },
-}
+const Container = styled.div`
+  width: 80vw;
+  border: solid 1px;
+  border-radius: 1em;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10vh;
+`
 
 function App() {
   return (
-    <div className="App">
-      <div style={style.contentContainer}>
+    <AppContainer>
+      <Container>
         <Form />
         <BookList />
-      </div>
-    </div>
+      </Container>
+    </AppContainer>
   );
 }
 

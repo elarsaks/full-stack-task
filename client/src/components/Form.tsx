@@ -1,67 +1,72 @@
 
+import styled from 'styled-components';
 import { useState } from 'react';
 
-const style = {
-	form: {
-		width: '40vw',
-		border: '1px solid',
-		display: 'flex',
-		padding: '10px'
-	},
-	label: {
-		marginBottom: '5px'
-	},
-	input: {
-		width: '37vw'
-	},
-	textarea: {
-		minHeight: '100px',
-		width: '37vw'
-	},
-	button: {
-		marginTop: '10px',
-		marginRight: '10px',
+const Form = styled.form`
+	width: 40vw;
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+
+	h4 {
+		margin-bottom: 3px;
+		margin-top: 0px;
 	}
-}
+`
+
+const Input = styled.input`
+	padding: 0.5em;
+  border: 1px solid;
+  border-radius: 3px;
+	width: 90%;
+	margin-bottom: 1em;
+`
+
+const TextArea = styled.textarea`
+	min-height: 100px;
+	width: 90%;
+	padding: 0.5em;
+	border: 1px solid;
+  border-radius: 3px;
+`
+
+const Button = styled.button`
+	margin-top: 10px;
+	margin-right: 10px;
+`
 
 export default () => {
 
 	const [book, setBook] = useState<Book>()
 
 	return (
-		<form style={style.form} >
+		<Form >
+			<label>
+				<h4 >Title:</h4>
+				<Input
+					name='title'
+				/>
+			</label>
+
+			<label>
+				<h4 >Author:</h4>
+				<Input
+					name='author'
+				/>
+			</label>
+
+			<label>
+				<h4 >Description</h4>
+				<TextArea
+					name='description'
+				/>
+			</label>
+
 			<div>
-				<label>
-					<h4 style={style.label}>Title:</h4>
-					<input
-						name='title'
-						style={style.input}
-					/>
-				</label>
-
-				<label>
-					<h4 style={style.label}>Author:</h4>
-					<input
-						name='author'
-						style={style.input}
-					/>
-				</label>
-
-				<label>
-					<h4 style={style.label}>Description</h4>
-					<textarea
-						name='description'
-						style={style.textarea}
-					/>
-				</label>
-
-				<div>
-					<button style={style.button} type='submit'>Save New</button>
-					<button style={style.button} type='submit'>Save</button>
-					<button style={style.button} type='submit'>Delete</button>
-				</div>
-
+				<Button type='submit'>Save New</Button>
+				<Button type='submit'>Save</Button>
+				<Button type='submit'>Delete</Button>
 			</div>
-		</form>
+		</Form>
 	)
 }
