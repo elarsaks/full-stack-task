@@ -7,7 +7,8 @@ const Table = styled.div`
 	display: flex;
 	flex-direction: column;
 	padding: 10px;
-	
+	overflow-y: scroll;
+	height: 70vh;
 
 	table {
 		text-align: left;
@@ -15,10 +16,15 @@ const Table = styled.div`
 	}
 
 	tbody tr {
+
 		&:hover {
 			background-color: #50C878;
 			cursor: pointer;
 		}
+	}
+
+	tbody td {
+		max-width: 150px;
 	}
 `
 
@@ -26,12 +32,12 @@ export default () => {
 
 	const [books, setBooks] = useState<Array<Book>>([])
 
-	for (let i = 0; i < 25; i++) {
+	for (let i = 0; i < 50; i++) {
 		let oldBooks = books;
 		oldBooks.push(
 			{
 				author: `Author ${i}`,
-				description: `This description of ${i} book!`,
+				description: `This description of ${i} book! Lorem ipsum dolor sit amet.`,
 				id: i,
 				title: `Book ${i}`,
 			}
