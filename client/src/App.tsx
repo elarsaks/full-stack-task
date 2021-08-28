@@ -43,6 +43,9 @@ class App extends React.Component<AppProps, AppState> {
     }
   }
 
+  selectBook = (book: Book) => {
+    this.setState(state => ({ activeBook: book }))
+  }
 
   componentDidMount() {
     api.getAllBooks()
@@ -55,11 +58,12 @@ class App extends React.Component<AppProps, AppState> {
         <h1>Full Stack Task</h1>
         <Container>
           <Form
-            selectedBook={{ id: 0, title: '', author: '', description: '' }}
+            activeBook={this.state.activeBook}
           />
 
           <BookList
             books={this.state.books}
+            selectBook={this.selectBook}
           />
         </Container>
       </AppContainer>

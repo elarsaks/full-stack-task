@@ -36,7 +36,7 @@ const Button = styled.button`
 `
 
 interface FormProps {
-	selectedBook: Book
+	activeBook: Book
 }
 
 class Form extends React.Component<FormProps, Book> {
@@ -45,7 +45,7 @@ class Form extends React.Component<FormProps, Book> {
 		super(props);
 
 		this.state = {
-			id: 0, // NOTE: this is just a placeholder, real ID will come from SQL
+			id: 99999999, // NOTE: this is just a placeholder, real ID will come from SQL
 			title: '',
 			author: '',
 			description: ''
@@ -70,6 +70,7 @@ class Form extends React.Component<FormProps, Book> {
 		// TODO: Why it cannot be done like this?
 		//this.setState(state => ({ [event.target.name]: event.target.value }))
 	}
+
 
 
 	render() {
