@@ -73,23 +73,39 @@ const Form: React.FC<FormProps> = ({ selectedBook }) => {
 		return author || description || title
 	}
 
+	function allFieldsHaveEntry() {
+		let author = activeBook.author.length > 0
+		let description = activeBook.description.length > 0
+		let title = activeBook.title.length > 0
+
+		return author && description && title
+	}
+
 	function onInputchange(event: any) {
 		setActiveBook({ ...activeBook, [event.target.name]: event.target.value })
 	}
 
-	function saveChanges() {
-		api.updateBook(activeBook)
-	}
-
-	function saveNewBook() {
-		if (fieldsHaveEntry()) {
-			api.addBook(activeBook)
+	function saveChanges(e: { preventDefault: () => void; }) {
+		if (allFieldsHaveEntry()) {
+			api.updateBook(activeBook)
+		} else {
+			e.preventDefault()
 		}
 	}
 
-	function deleteBook() {
+	function saveNewBook(e: { preventDefault: () => void; }) {
+		if (allFieldsHaveEntry()) {
+			api.addBook(activeBook)
+		} else {
+			e.preventDefault()
+		}
+	}
+
+	function deleteBook(e: { preventDefault: () => void; }) {
 		if (!(activeBook.id < 0)) {
 			api.deleteBook(activeBook.id)
+		} else {
+			e.preventDefault()
 		}
 
 		setActiveBook({
@@ -132,14 +148,14 @@ const Form: React.FC<FormProps> = ({ selectedBook }) => {
 
 			<div>
 				<Button
-					active={activeBook.id < 0 && fieldsHaveEntry()}
+					active={activeBook.id < 0 && allFieldsHaveEntry()}
 					backgroundColor='#4CAF50'
 					onClick={saveNewBook}>
 					Save New
 				</Button>
 
 				<Button
-					active={!(activeBook.id < 0)}
+					active={!(activeBook.id < 0) && allFieldsHaveEntry()}
 					backgroundColor='#4CAF50'
 					onClick={saveChanges}>
 					Save
