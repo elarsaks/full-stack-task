@@ -73,17 +73,12 @@ const Form: React.FC<FormProps> = ({ selectedBook }) => {
 		return author || description || title
 	}
 
-	function isNewBook() {
-		return (activeBook.id < 0)
-	}
-
 	function onInputchange(event: any) {
 		setActiveBook({ ...activeBook, [event.target.name]: event.target.value })
 	}
 
-	function saveChanges(e: { preventDefault: () => void; }) {
-		e.preventDefault()
-		console.log(selectedBook.id, activeBook.id < 0)
+	function saveChanges() {
+		api.updateBook(activeBook)
 	}
 
 	function saveNewBook() {
@@ -92,9 +87,7 @@ const Form: React.FC<FormProps> = ({ selectedBook }) => {
 		}
 	}
 
-	function deleteBook(e: any) {
-		e.preventDefault()
-
+	function deleteBook() {
 		if (!(activeBook.id < 0)) {
 			api.deleteBook(activeBook.id)
 		}
