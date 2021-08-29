@@ -20,7 +20,7 @@ React-client | http://localhost:8080/
 Api (Node JS) | http://localhost:3001/api/info  
 
 ## Architecture
-<img src="https://raw.githubusercontent.com/elarsaks/full-stack-task/master/screenshot.png" />
+<img src="https://raw.githubusercontent.com/elarsaks/full-stack-task/master/arcitecture.png" />
 
 ### api
 
