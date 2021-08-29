@@ -65,20 +65,35 @@ const Form: React.FC<FormProps> = ({ selectedBook }) => {
 		description: ''
 	})
 
-	function fieldsHaveEntry() {
-		let author = activeBook.author.length > 0
-		let description = activeBook.description.length > 0
-		let title = activeBook.title.length > 0
-
-		return author || description || title
-	}
-
 	function allFieldsHaveEntry() {
 		let author = activeBook.author.length > 0
 		let description = activeBook.description.length > 0
 		let title = activeBook.title.length > 0
 
 		return author && description && title
+	}
+
+	function deleteBook(e: { preventDefault: () => void; }) {
+		if (!(activeBook.id < 0)) {
+			api.deleteBook(activeBook.id)
+		} else {
+			e.preventDefault()
+		}
+
+		setActiveBook({
+			id: -9000,
+			title: '',
+			author: '',
+			description: ''
+		})
+	}
+
+	function fieldsHaveEntry() {
+		let author = activeBook.author.length > 0
+		let description = activeBook.description.length > 0
+		let title = activeBook.title.length > 0
+
+		return author || description || title
 	}
 
 	function onInputchange(event: any) {
@@ -99,21 +114,6 @@ const Form: React.FC<FormProps> = ({ selectedBook }) => {
 		} else {
 			e.preventDefault()
 		}
-	}
-
-	function deleteBook(e: { preventDefault: () => void; }) {
-		if (!(activeBook.id < 0)) {
-			api.deleteBook(activeBook.id)
-		} else {
-			e.preventDefault()
-		}
-
-		setActiveBook({
-			id: -9000,
-			title: '',
-			author: '',
-			description: ''
-		})
 	}
 
 	useEffect(() => setActiveBook(selectedBook), [selectedBook])
