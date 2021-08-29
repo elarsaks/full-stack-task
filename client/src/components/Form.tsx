@@ -146,7 +146,7 @@ const Form: React.FC<FormProps> = ({ selectedBook }) => {
 				</Button>
 
 				<Button
-					active={selectedBook.id == activeBook.id || fieldsHaveEntry()}
+					active={selectedBook.id === activeBook.id || fieldsHaveEntry()}
 					backgroundColor='#c21d39'
 					onClick={deleteBook}>
 					Delete

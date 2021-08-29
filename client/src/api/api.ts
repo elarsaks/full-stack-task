@@ -31,9 +31,11 @@ const updateBook = (book: Book) => {
 	}).then((resp: any) => resp)
 }
 
-export default {
+const api = {
 	addBook,
 	deleteBook,
 	getAllBooks,
 	updateBook
 }
+
+export default api

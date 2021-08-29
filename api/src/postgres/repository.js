@@ -16,7 +16,8 @@ function deleteBook(id) {
 
 function getAllBooks() {
 	return postgres.db
-			.many(`SELECT * FROM books`)
+		.many(`SELECT * FROM books
+			ORDER BY id DESC`)
 			.catch(postgres.handleEmptyError)
 }
 
