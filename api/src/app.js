@@ -8,7 +8,7 @@ app.use(router)
 
 function populateDB() {
   console.log('Populating Database . . .')
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 25; i++) {
     postgres.addBook({
       author: `Author ${i}`,
       description: `This description of ${i} book! `,
