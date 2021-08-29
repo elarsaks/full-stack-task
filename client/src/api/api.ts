@@ -12,8 +12,8 @@ const deleteBook = (id: number) => {
 	return axios({
 		url: `http://localhost:3001/api/deleteBook`,
 		method: 'DELETE',
-		params: id,
-	}).then((resp: any) => resp)
+		params: {id: id},
+	}).then((resp: any) => console.log(resp))
 }
 
 const getAllBooks = () => {

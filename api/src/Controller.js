@@ -18,7 +18,7 @@ class Controller {
         }
 
         postgres.deleteBook(book.id)
-            .then(() => res.status(200).send('Book deleted!  \n' + book))
+            .then(() => res.status(200).send('Book deleted!'))
     }
 
     static getAllBooks(req, res, next) {
