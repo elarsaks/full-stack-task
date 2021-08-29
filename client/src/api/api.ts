@@ -1,10 +1,10 @@
 const axios = require('axios')
 
-const addBook = (id: number) => {
+const addBook = (book: Book) => {
 	return axios({
 		url: `http://localhost:3001/api/addBook`,
 		method: 'POST',
-		params: id,
+		params: book,
 	}).then((resp: any) => resp)
 }
 

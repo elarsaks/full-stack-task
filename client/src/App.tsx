@@ -22,7 +22,7 @@ const Container = styled.div`
 `
 interface AppState {
   books: Book[]
-  activeBook: Book
+  selectedBook: Book
 }
 
 interface AppProps {
@@ -34,8 +34,8 @@ class App extends React.Component<AppProps, AppState> {
 
     this.state = {
       books: [],
-      activeBook: {
-        id: 0, // NOTE: this is just a placeholder, real ID will come from SQL
+      selectedBook: {
+        id: -9999,
         title: '',
         author: '',
         description: ''
@@ -43,12 +43,23 @@ class App extends React.Component<AppProps, AppState> {
     }
   }
 
+  addNewBook(books: Book[]) {
+    books.unshift({
+      id: -9999,
+      title: 'SELECT',
+      author: 'THIS',
+      description: 'TO ADD NEW BOOK!'
+    })
+    return books
+  }
+
   selectBook = (book: Book) => {
-    this.setState(state => ({ activeBook: book }))
+    this.setState(state => ({ selectedBook: book }))
   }
 
   componentDidMount() {
     api.getAllBooks()
+      .then((data: Book[]) => this.addNewBook(data))
       .then((data: Book[]) => this.setState((state) => ({ books: data })))
   }
 
@@ -58,7 +69,7 @@ class App extends React.Component<AppProps, AppState> {
         <h1>Full Stack Task</h1>
         <Container>
           <Form
-            activeBook={this.state.activeBook}
+            selectedBook={this.state.selectedBook}
           />
 
           <BookList

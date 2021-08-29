@@ -2,6 +2,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import api from '../api/api'
 
 const FormElement = styled.form`
 	width: 40vw;
@@ -31,36 +32,89 @@ const TextArea = styled.textarea`
   border-radius: 3px;
 `
 
-const Button = styled.button`
+interface ButtonProps {
+	backgroundColor: string
+	active: boolean
+}
+
+const Button = styled.button<ButtonProps>`
 	margin-top: 10px;
 	margin-right: 10px;
+	background-color:${(p) => p.active ? p.backgroundColor : 'gray'};
+  border: none;
+	border-radius: 0.25em;
+  color: white;
+  padding: 0.5em 1em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+	cursor: ${(p) => p.active ? 'pointer' : ''};;
 `
 
 interface FormProps {
-	activeBook: Book
+	selectedBook: Book
 }
 
-const Form: React.FC<FormProps> = ({ activeBook }) => {
+const Form: React.FC<FormProps> = ({ selectedBook }) => {
 
-	const [book, setBook] = useState<Book>({
-		id: 0, // NOTE: this is just a placeholder, real ID will come from SQL
+	const [activeBook, setActiveBook] = useState<Book>({
+		id: -9000, // NOTE: this is just a placeholder, real ID will come from SQL
 		title: '',
 		author: '',
 		description: ''
 	})
 
-	function onInputchange(event: any) {
-		setBook({ ...book, [event.target.name]: event.target.value })
+	function fieldsHaveEntry() {
+		let author = activeBook.author.length > 0
+		let description = activeBook.description.length > 0
+		let title = activeBook.title.length > 0
+
+		return author || description || title
 	}
 
-	useEffect(() => setBook(activeBook), [activeBook])
+	function isNewBook() {
+		return (activeBook.id < 0)
+	}
+
+	function onInputchange(event: any) {
+		setActiveBook({ ...activeBook, [event.target.name]: event.target.value })
+	}
+
+	function saveChanges(e: { preventDefault: () => void; }) {
+		e.preventDefault()
+		console.log(selectedBook.id, activeBook.id < 0)
+	}
+
+	function saveNewBook() {
+		if (fieldsHaveEntry()) {
+			api.addBook(activeBook)
+		}
+	}
+
+	function deleteBook(e: any) {
+		e.preventDefault()
+
+		if (!(activeBook.id < 0)) {
+			api.deleteBook(activeBook.id)
+		}
+
+		setActiveBook({
+			id: -9000,
+			title: '',
+			author: '',
+			description: ''
+		})
+	}
+
+	useEffect(() => setActiveBook(selectedBook), [selectedBook])
 	return (
 		<FormElement >
 			<label>
 				<h4 >Title:</h4>
 				<Input
 					name='title'
-					value={book.title}
+					value={activeBook.title}
 					onChange={onInputchange}
 				/>
 			</label>
@@ -69,7 +123,7 @@ const Form: React.FC<FormProps> = ({ activeBook }) => {
 				<h4 >Author:</h4>
 				<Input
 					name='author'
-					value={book.author}
+					value={activeBook.author}
 					onChange={onInputchange}
 				/>
 			</label>
@@ -78,15 +132,32 @@ const Form: React.FC<FormProps> = ({ activeBook }) => {
 				<h4 >Description</h4>
 				<TextArea
 					name='description'
-					value={book.description}
+					value={activeBook.description}
 					onChange={onInputchange}
 				/>
 			</label>
 
 			<div>
-				<Button >Save New</Button>
-				<Button >Save</Button>
-				<Button >Delete</Button>
+				<Button
+					active={activeBook.id < 0 && fieldsHaveEntry()}
+					backgroundColor='#4CAF50'
+					onClick={saveNewBook}>
+					Save New
+				</Button>
+
+				<Button
+					active={!(activeBook.id < 0)}
+					backgroundColor='#4CAF50'
+					onClick={saveChanges}>
+					Save
+				</Button>
+
+				<Button
+					active={selectedBook.id == activeBook.id || fieldsHaveEntry()}
+					backgroundColor='#c21d39'
+					onClick={deleteBook}>
+					Delete
+				</Button>
 			</div>
 		</FormElement >
 	)
